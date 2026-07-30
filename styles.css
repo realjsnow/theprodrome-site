@@ -115,25 +115,25 @@ iframe {
   margin: 0;
 }
 
-.contact-send {
+.site-footer .contact-send {
   display: inline-block;
   padding: 0.5rem 1.6rem;
-  background: var(--blood);
-  border: 1px solid rgba(246, 243, 239, 0.18);
+  background: var(--white);
+  border: 1px solid var(--white);
   border-radius: 2px;
-  color: var(--white);
+  color: var(--black);
   font-family: var(--display);
   font-weight: 700;
   font-size: 0.95rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-.contact-send:hover {
-  background: #8a1608;
-  border-color: rgba(246, 243, 239, 0.4);
+.site-footer .contact-send:hover {
+  background: transparent;
+  color: var(--white);
 }
 
 .social-link svg {
