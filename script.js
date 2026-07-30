@@ -19,50 +19,50 @@
     }
   });
 
-  var form = document.getElementById("contact-form");
+  var btn = document.getElementById("text-btn");
 
-  if (form) {
-    var endpoint =
-      atob("aHR0cHM6Ly9mb3Jtc3VibWl0LmNvL2FqYXgv") +
-      atob("amFzb253YWRlc25vd0BnbWFpbC5jb20=");
-    var status = form.querySelector(".contact-status");
-    var button = form.querySelector(".contact-send");
+  if (btn) {
+    var label = btn.querySelector(".btn-text-label");
+    var original = label.textContent;
+    var resetTimer = null;
 
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
+    // Stored as character codes so the number never appears in the page
+    // source, where scrapers harvest it with a plain phone-number regex.
+    var number = String.fromCharCode.apply(
+      null,
+      [43, 49, 55, 48, 50, 54, 48, 56, 49, 57, 53, 50]
+    );
 
-      button.disabled = true;
-      status.textContent = "Sending...";
+    btn.setAttribute("href", "sms:" + number);
 
-      fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          name: form.elements.name.value,
-          email: form.elements.email.value,
-          message: form.elements.message.value,
-          _subject: "Prodrome website inquiry",
-          _template: "table",
-          _captcha: "false"
-        })
-      })
-        .then(function (response) {
-          if (!response.ok) {
-            throw new Error("Request failed");
-          }
+    // sms: links only resolve on devices with a messaging app registered for
+    // the protocol. On desktop the click is silently ignored, so copy the
+    // number instead of leaving a dead button.
+    function isDesktop() {
+      return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    }
 
-          form.reset();
-          status.textContent = "Message sent. Thank you.";
-        })
-        .catch(function () {
-          status.textContent = "Something went wrong. Please try again later.";
-        })
-        .finally(function () {
-          button.disabled = false;
-        });
+    function flash(message) {
+      label.textContent = message;
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(function () {
+        label.textContent = original;
+      }, 2000);
+    }
+
+    btn.addEventListener("click", function (e) {
+      if (!isDesktop()) return; // let the sms: link open Messages on mobile
+
+      e.preventDefault();
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(number).then(
+          function () { flash("Number copied"); },
+          function () { flash("Copy failed"); }
+        );
+      } else {
+        flash("Copy failed");
+      }
     });
   }
 })();
