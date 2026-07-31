@@ -86,7 +86,8 @@ iframe {
 .site-footer--contact {
   align-items: center;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  column-gap: 3rem;
+  row-gap: 1.5rem;
   padding-top: clamp(1.5rem, 3vw, 2.5rem);
   padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
 }
@@ -122,17 +123,30 @@ iframe {
   color: var(--white);
 }
 
-/* Secondary button, so "Text Me" stays the louder of the two. */
-.site-footer .contact-send--ghost {
-  background: transparent;
-  color: var(--white);
-  text-transform: lowercase;
-  letter-spacing: 0.12em;
+/* Plain text links, so they read as a footnote next to "Text Me"
+   rather than a second button competing for the same attention. */
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.65rem;
 }
 
-.site-footer .contact-send--ghost:hover {
-  background: var(--white);
-  color: var(--black);
+.site-footer a.footer-link {
+  padding-bottom: 0.15rem;
+  color: var(--muted);
+  border-bottom: 1px solid transparent;
+  white-space: nowrap;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.site-footer a.footer-link:hover {
+  color: var(--white);
+  border-color: currentColor;
+}
+
+.footer-links__sep {
+  color: var(--muted);
 }
 
 .brand:focus-visible,
@@ -598,7 +612,7 @@ iframe {
   }
 
   .site-footer {
-    gap: 1.5rem;
+    gap: 1.75rem;
   }
 
   .section {
