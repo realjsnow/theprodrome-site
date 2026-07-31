@@ -92,16 +92,6 @@ iframe {
   padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.contact-block {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.contact-block .eyebrow {
-  margin: 0;
-}
-
 .site-footer .contact-send {
   display: inline-block;
   padding: 0.5rem 1.6rem;
@@ -123,13 +113,11 @@ iframe {
   color: var(--white);
 }
 
-/* Plain text links, so they read as a footnote next to "Text Me"
-   rather than a second button competing for the same attention. */
 .footer-links {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.65rem;
+  align-items: center;
+  gap: 0.85rem;
 }
 
 .site-footer a.footer-link {
