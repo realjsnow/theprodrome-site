@@ -59,6 +59,7 @@ once per browser session, is skipped entirely for visitors who ask for reduced
 motion, and can be dismissed with any click or keypress. If JavaScript is off
 the overlay never appears at all.
 
-## Social Links
+## Footer Links
 
-The TikTok and Instagram links are placeholders right now. Search for `href="#"` in `index.html` and replace those values with the real profile URLs.
+There are no social icons. The footer carries two buttons: "Text Me", and a
+secondary one linking back to `realjsnow.com`.

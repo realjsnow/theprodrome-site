@@ -83,20 +83,6 @@ iframe {
   white-space: nowrap;
 }
 
-.social-links {
-  display: flex;
-  align-items: center;
-  gap: clamp(0.8rem, 1.4vw, 1.5rem);
-}
-
-.social-link {
-  display: inline-grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  color: var(--white);
-}
-
 .site-footer--contact {
   align-items: center;
   flex-wrap: wrap;
@@ -136,22 +122,19 @@ iframe {
   color: var(--white);
 }
 
-.social-link svg {
-  width: 1.45rem;
-  height: 1.45rem;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2.25;
+/* Secondary button, so "Text Me" stays the louder of the two. */
+.site-footer .contact-send--ghost {
+  background: transparent;
+  color: var(--white);
+  text-transform: lowercase;
+  letter-spacing: 0.12em;
 }
 
-.social-link--tiktok svg {
-  fill: currentColor;
-  stroke: none;
+.site-footer .contact-send--ghost:hover {
+  background: var(--white);
+  color: var(--black);
 }
 
-.social-link:focus-visible,
 .brand:focus-visible,
 .site-footer a:focus-visible {
   outline: 2px solid var(--white);
