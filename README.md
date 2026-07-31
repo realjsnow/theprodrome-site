@@ -39,13 +39,25 @@ assets/fonts/
 
 ## Trailer
 
-The trailer is currently using a sample Vimeo embed in `index.html`.
+The trailer is Vimeo video `1214477179` (unlisted, hash `a312ae3c1b`).
 
-When the real trailer is uploaded to Vimeo, replace the iframe `src` with your Vimeo player URL:
+The page does not load the Vimeo player on arrival. It shows a cover image and
+only swaps in the iframe when someone clicks play, which keeps the initial load
+light. If you change the video, update it in three places:
 
-```html
-https://player.vimeo.com/video/YOUR_VIDEO_ID?title=0&byline=0&portrait=0
-```
+- `script.js` — the `iframe.src` built in the play handler
+- `index.html` — the `<noscript>` fallback iframe
+- `index.html` — `embedUrl` in the `Movie` structured data
+
+The cover image is `assets/images/trailer-cover.jpg`, a 16:9 crop of
+`trailer-poster.webp`. Replace it with another 1600x900 image to change it.
+
+## Intro
+
+`intro.js` runs the blood intro over the whole page. It lasts under 1.5s, plays
+once per browser session, is skipped entirely for visitors who ask for reduced
+motion, and can be dismissed with any click or keypress. If JavaScript is off
+the overlay never appears at all.
 
 ## Social Links
 

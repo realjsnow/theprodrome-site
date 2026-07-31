@@ -50,7 +50,16 @@
         { "@type": "Person", "name": "Jason Snow" },
         { "@type": "Person", "name": "Tom Kunzman" },
         { "@type": "Person", "name": "Deonte Finch" }
-      ]
+      ],
+      "trailer": {
+        "@type": "VideoObject",
+        "name": "Prodrome Movie Trailer",
+        "description": "Official trailer for Prodrome, a short horror film by Jason Snow starring Tom Kunzman and Deonte Finch.",
+        "thumbnailUrl": "https://theprodrome.com/assets/images/trailer-cover.jpg",
+        "uploadDate": "2026-07-30",
+        "duration": "PT30S",
+        "embedUrl": "https://player.vimeo.com/video/1214477179?h=a312ae3c1b"
+      }
     }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,20 +69,70 @@
       rel="stylesheet"
     >
     <link rel="stylesheet" href="styles.css">
+    <script>
+      // Arms the blood intro before first paint so the overlay never flashes.
+      // Nothing here runs without JS, so the overlay stays hidden for crawlers
+      // and no-script visitors, and the failsafe clears it if intro.js dies.
+      (function () {
+        var root = document.documentElement;
+        try {
+          if (sessionStorage.getItem("prodrome-intro-seen")) return;
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          sessionStorage.setItem("prodrome-intro-seen", "1");
+        } catch (e) {
+          return;
+        }
+        root.className += " intro-armed";
+        // If intro.js never finishes (blocked, or rAF paused in a background
+        // tab) drop the overlay anyway rather than leaving the page covered.
+        setTimeout(function () {
+          root.className = root.className.replace(/\bintro-armed\b/, "");
+          var el = document.getElementById("intro");
+          if (el && el.parentNode) el.parentNode.removeChild(el);
+        }, 3000);
+      })();
+    </script>
   </head>
   <body>
+    <div class="intro" id="intro" aria-hidden="true">
+      <canvas class="intro__canvas" id="intro-canvas"></canvas>
+      <p class="intro__title" id="intro-title">Prodrome</p>
+    </div>
+
     <main>
       <section class="section section--trailer blood-panel" id="trailer" aria-labelledby="trailer-title">
         <div class="section-inner section-inner--centered">
           <h1 id="trailer-title" class="section-title section-title--center">Prodrome</h1>
           <p class="section-subtitle">A film by Jason Snow</p>
-          <div class="trailer-frame">
-            <iframe
-              title="Prodrome trailer"
-              src="https://player.vimeo.com/video/76979871?h=8272103f6e&title=0&byline=0&portrait=0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen
-            ></iframe>
+          <div class="trailer-frame" id="trailer-frame">
+            <button class="trailer-cover" type="button" id="trailer-play">
+              <img
+                class="trailer-cover__art"
+                src="assets/images/trailer-cover.jpg"
+                alt="Tom Kunzman, Deonte Finch and Jason Snow screaming, covered in blood"
+                width="1600"
+                height="900"
+                fetchpriority="high"
+                decoding="async"
+              >
+              <span class="trailer-cover__scrim" aria-hidden="true"></span>
+              <span class="trailer-cover__button" aria-hidden="true">
+                <svg viewBox="0 0 80 80" aria-hidden="true">
+                  <circle class="trailer-cover__ring" cx="40" cy="40" r="37"></circle>
+                  <path class="trailer-cover__tri" d="M32 25.5 L58 40 L32 54.5 Z"></path>
+                </svg>
+              </span>
+              <span class="trailer-cover__label">Watch the trailer</span>
+            </button>
+            <noscript>
+              <iframe
+                title="Prodrome Movie Trailer"
+                src="https://player.vimeo.com/video/1214477179?h=a312ae3c1b&amp;badge=0&amp;autopause=0&amp;title=0&amp;byline=0&amp;portrait=0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </noscript>
           </div>
         </div>
       </section>
@@ -264,6 +323,7 @@
       </nav>
     </footer>
 
+    <script src="intro.js" defer></script>
     <script src="script.js" defer></script>
   </body>
 </html>

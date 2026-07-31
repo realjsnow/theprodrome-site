@@ -19,6 +19,29 @@
     }
   });
 
+  // The Vimeo player costs ~700KB and a fistful of requests, so the cover art
+  // stands in until someone actually asks for the trailer.
+  var play = document.getElementById("trailer-play");
+  var frame = document.getElementById("trailer-frame");
+
+  if (play && frame) {
+    play.addEventListener("click", function () {
+      var iframe = document.createElement("iframe");
+
+      iframe.title = "Prodrome Movie Trailer";
+      iframe.src =
+        "https://player.vimeo.com/video/1214477179?h=a312ae3c1b" +
+        "&badge=0&autopause=0&title=0&byline=0&portrait=0&autoplay=1";
+      iframe.allow =
+        "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share";
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      iframe.allowFullscreen = true;
+
+      frame.innerHTML = "";
+      frame.appendChild(iframe);
+    });
+  }
+
   var btn = document.getElementById("text-btn");
 
   if (btn) {
