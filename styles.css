@@ -41,6 +41,14 @@ a {
   text-decoration: none;
 }
 
+/* Links out to IMDb, styled to read as plain text until a keyboard
+   user tabs onto one. */
+.imdb-link:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 0.2rem;
+  border-radius: 2px;
+}
+
 img,
 iframe {
   display: block;
